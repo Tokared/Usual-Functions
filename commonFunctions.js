@@ -6,6 +6,53 @@ window.requestAnimFrame = (function() {
 		};
 })();
 
+//排序之快速排序start
+/*
+    没传参（初始状态）默认排序整个数组，有传参则是递归（部分排序）；
+	left为需要数组中参与排序的起始点；right为数组中参与排序的终止点;
+	partitionIndex为基准值的坐标，将大于（小于）其值分别放在右（左）侧;
+*/
+function quicksort(arr,left,right){
+	var partitionIndex,
+		  left = typeof left !='number' 0 : left,
+		  right = typeof right != 'number' arr.length-1 : right;
+	if( left < right ){
+		partitionIndex = partition(arr,left,right);
+		quicksort(arr,left,partitionIndex-1);
+		quicksort(arr,partitionIndex+1,right);
+	}
+	return arr;
+}
+/*
+快排思想：
+	left索引作为参考值，循环与其比较大小；
+	index索引是arr中待交换位置；（left索引最后移动，将需要交换的元素依次放在left索引后）
+	每次都是swap(交换）后，index移动到下一个位置。
+	在循环结束后，index仍为待交换的位置，所以index的值未定，
+	排序区间为left+1到index-1索引值，其值都小于参考值arr[left]；
+	再将left换到index-1，排序区间为left到index-2，
+	返回的index-1则作为主函数递归用的参考值分界线；
+*/
+function partition(arr,left,right){
+	var index = left+1;
+	for(var  i = index ;i<right;i++){
+		if(arr[i] < arr[left]){
+			swap(arr,i,index);
+			index++;
+		}
+	}
+	swap(arr,left,index-1);
+	return index-1;
+}
+
+//交换位置
+function swap(arr,i,j){
+	var temp = arr[i];
+	arr[i]=arr[j];
+	arr[j]=temp;
+}
+//排序之快速排序over
+
 //计算长度平方
 function calLength2(x1, y1, x2, y2) {
 	return Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2);
@@ -108,3 +155,4 @@ function rndi2(m, n) {
 	var a = Math.random() * (n - m) + m;
 	return Math.floor(a);
 }
+
