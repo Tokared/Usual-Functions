@@ -14,8 +14,8 @@ window.requestAnimFrame = (function() {
 */
 function quicksort(arr,left,right){
 	var partitionIndex,
-		  left = typeof left !='number' 0 : left,
-		  right = typeof right != 'number' arr.length-1 : right;
+		  left = typeof left !='number' ?0 : left,
+		  right = typeof right != 'number' ? arr.length-1 : right;
 	if( left < right ){
 		partitionIndex = partition(arr,left,right);
 		quicksort(arr,left,partitionIndex-1);
@@ -52,6 +52,36 @@ function swap(arr,i,j){
 	arr[j]=temp;
 }
 //排序之快速排序over
+
+//数组去重
+//（一）indexOf方法 (方法绑定在Object上)
+Array.prototype.norepeat = function (){
+	var temp = [];
+	for(var i = 0; i < this.length; i++){
+		if(temp.indexOf(this[i]) == -1){
+			temp.push(this[i]);
+		}
+	}
+	return temp;
+}
+//（二）hash方法 (基本数据类型时可用，对象类型不可用)
+Array.prototype.unique = function () {	
+	var hash = {}, result = [], type = '', item;
+    for (var i = 0; i < this.length; i++) {
+		item = this[i];
+        type = Object.prototype.toString.call(item);
+        if ( !hash[item + type] ) {
+			hash[item + type] = true;
+            result.push(item);
+        }
+    }
+    return result;
+};
+
+//数组求极值
+Object.prototype.findMax = function (arr) {
+	return Math.max.apply(null, arr); //第一个参数给了一个null,这是因为没有对象去调用这个方法,我只需要用这个方法帮我运算,得到返回的结果就行,.所以直接传递了一个null过去
+}
 
 //计算长度平方
 function calLength2(x1, y1, x2, y2) {
