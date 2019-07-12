@@ -1,7 +1,7 @@
 //兼容各种游览器
-window.requestAnimFrame = (function() {
+window.requestAnimFrame = (function () {
 	return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
-		function( /* function FrameRequestCallback */ callback, /* DOMElement Element */ element) {
+		function ( /* function FrameRequestCallback */ callback, /* DOMElement Element */ element) {
 			return window.setTimeout(callback, 1000 / 60);
 		};
 })();
@@ -12,14 +12,14 @@ window.requestAnimFrame = (function() {
 	left为需要数组中参与排序的起始点；right为数组中参与排序的终止点;
 	partitionIndex为基准值的坐标，将大于（小于）其值分别放在右（左）侧;
 */
-function quicksort(arr,left,right){
+function quicksort(arr, left, right) {
 	var partitionIndex,
-		  left = typeof left !='number' ?0 : left,
-		  right = typeof right != 'number' ? arr.length-1 : right;
-	if( left < right ){
-		partitionIndex = partition(arr,left,right);
-		quicksort(arr,left,partitionIndex-1);
-		quicksort(arr,partitionIndex+1,right);
+		left = typeof left != 'number' ? 0 : left,
+		right = typeof right != 'number' ? arr.length - 1 : right;
+	if (left < right) {
+		partitionIndex = partition(arr, left, right);
+		quicksort(arr, left, partitionIndex - 1);
+		quicksort(arr, partitionIndex + 1, right);
 	}
 	return arr;
 }
@@ -33,49 +33,49 @@ function quicksort(arr,left,right){
 	再将left换到index-1，排序区间为left到index-2，
 	返回的index-1则作为主函数递归用的参考值分界线；
 */
-function partition(arr,left,right){
-	var index = left+1;
-	for(var  i = index ;i<right;i++){
-		if(arr[i] < arr[left]){
-			swap(arr,i,index);
+function partition(arr, left, right) {
+	var index = left + 1;
+	for (var i = index; i < right; i++) {
+		if (arr[i] < arr[left]) {
+			swap(arr, i, index);
 			index++;
 		}
 	}
-	swap(arr,left,index-1);
-	return index-1;
+	swap(arr, left, index - 1);
+	return index - 1;
 }
 
 //交换位置
-function swap(arr,i,j){
+function swap(arr, i, j) {
 	var temp = arr[i];
-	arr[i]=arr[j];
-	arr[j]=temp;
+	arr[i] = arr[j];
+	arr[j] = temp;
 }
 //排序之快速排序over
 
 //数组去重
 //（一）indexOf方法 (方法绑定在Object上)
-Array.prototype.norepeat = function (){
+Array.prototype.norepeat = function () {
 	var temp = [];
-	for(var i = 0; i < this.length; i++){
-		if(temp.indexOf(this[i]) == -1){
+	for (var i = 0; i < this.length; i++) {
+		if (temp.indexOf(this[i]) == -1) {
 			temp.push(this[i]);
 		}
 	}
 	return temp;
 }
 //（二）hash方法 (基本数据类型时可用，对象类型不可用)
-Array.prototype.unique = function () {	
+Array.prototype.unique = function () {
 	var hash = {}, result = [], type = '', item;
-    for (var i = 0; i < this.length; i++) {
+	for (var i = 0; i < this.length; i++) {
 		item = this[i];
-        type = Object.prototype.toString.call(item);
-        if ( !hash[item + type] ) {
+		type = Object.prototype.toString.call(item);
+		if (!hash[item + type]) {
 			hash[item + type] = true;
-            result.push(item);
-        }
-    }
-    return result;
+			result.push(item);
+		}
+	}
+	return result;
 };
 
 //数组求极值
@@ -186,3 +186,19 @@ function rndi2(m, n) {
 	return Math.floor(a);
 }
 
+
+//禁止ctrl复制
+function stopCopy() {
+	document.onkeydown = function () {
+		if ((event.ctrlKey) && (window.event.keycode == 67)) {
+			event.returnValue = false;
+			alert("Ctrl+C被禁止啦！");
+		}
+	}
+	document.onmousedown = function () {
+		if (event.button == 2) {
+			event.returnValue = false;
+			alert("右键被禁止啦！");
+		}
+	}
+}
