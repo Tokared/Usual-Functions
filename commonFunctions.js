@@ -186,8 +186,33 @@ function rndi2(m, n) {
 	return Math.floor(a);
 }
 
+// div全屏方法
+function launchIntoFullscreen(element) {
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if (element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  }
+}
+full = document.getElementById('viewDiv');
+launchIntoFullscreen(full)
 
-//禁止ctrl复制
+// 退出全屏方法
+function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
+}
+
+// 禁止ctrl复制
 function stopCopy() {
 	document.onkeydown = function () {
 		if ((event.ctrlKey) && (window.event.keycode == 67)) {
@@ -202,3 +227,13 @@ function stopCopy() {
 		}
 	}
 }
+
+// 获取游览器url
+window.location.host; //返回url的主机部分包含端口，例如：www.baidu.com
+window.location.hostname; //同上 但不包含端口
+
+window.location.href; //返回整个url字符串(在浏览器中就是完整的地址栏)
+window.location.pathname; //返回router路由
+window.location.protocol; //返回url 的协议部分，例如： http:，ftp:，maito:等等
+window.location.port //url 的端口部分，如果采用默认的80端口，那么返回值并不是默认的80而是空字符  
+
